@@ -1,0 +1,80 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion global_compileSdkVersion
+    defaultConfig {
+        minSdkVersion global_minSdkVersion
+        targetSdkVersion global_targetSdkVersion
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+}
+
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation "com.android.support:appcompat-v7:$global_supportVersion"
+    implementation project(':library')
+
+    implementation "com.github.bumptech.glide:glide:$global_glideVersion"
+    annotationProcessor "com.github.bumptech.glide:compiler:$global_glideCompilerVersion"
+
+    testImplementation "junit:junit:$global_junitVersion"
+    androidTestImplementation "com.android.support.test:runner:$global_runnerVersion"
+    androidTestImplementation "com.android.support.test.espresso:espresso-core:$global_espressoVersion"
+}
+
+
+// maven push
+apply plugin: 'com.github.wangjiegulu.plg.rapidmavenpush'
+rapidMavenPush {
+    printProperties = true
+    abortOnError = false
+    disable = false
+    defaultMavenType = 'local'
+    mavens {
+        maven {
+            mavenType = 'local'
+            propertyFiles = [
+                    file("../mavenupload/maven_common.properties"),
+                    file("mavenupload/maven_local.properties")
+            ]
+            propertyInjectMode = 'replace'
+        }
+        maven {
+            mavenType = 'central'
+            propertyFiles = [
+                    file("../mavenupload/maven_common.properties"),
+                    file("mavenupload/maven_central.properties")
+            ]
+            propertyInjectMode = 'replace'
+        }
+    }
+}
+
+import com.wangjiegulu.plg.rapidmavenpush.RapidParameterParser
+apply plugin: 'com.github.wangjiegulu.plg.rapidmetainf'
+project.afterEvaluate {
+    // META-INF properties
+    rapidmetainf {
+        RapidParameterParser rapidParameterParser = new RapidParameterParser(project)
+        metaInfName 'EPOCH_TEXT_MARKDOWN.properties'
+        metaInfProperties "archiveName=${rapidParameterParser.getStringParameter('POM_ARCHIVE_ID')}",
+                "archiveVersion=${rapidParameterParser.getStringParameter('POM_ARCHIVE_VERSION_NAME')}",
+                "archiveUrl=${rapidParameterParser.getStringParameter('POM_URL')}",
+                "author=${rapidParameterParser.getStringParameter('POM_DEVELOPER_NAME')}",
+                "authorEmail=${rapidParameterParser.getStringParameter('POM_DEVELOPER_EMAIL')}"
+    }
+}

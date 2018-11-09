@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">EpochText</string>
+    <!--<string name="test_content"><![CDATA[<img src=\"https://images.unsplash.com/reserve/bOvf94dPRxWu0u3QsPjF_tree.jpg?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=dc3c11450eb2cc81086200006ac495a4&auto=format&fit=crop&w=3310&q=80\"/>树林和我\n紧紧围住了小湖\n手伸进水里\n搅乱雨燕深沉的睡眠\n风孤零零的\n海很遥远\n\n我走到街上\n喧嚣被挡在红灯后面\n影子扇形般打开\n脚印歪歪斜斜\n安全岛孤零零的\n海很遥远\n\n一扇蓝色的窗户亮了\n楼下，几个男孩\n拨动着吉他吟唱\n烟头忽明忽暗\n野猫孤零零的\n海很遥远\n\n沙滩上，你睡着了\n风停在你的嘴边\n波浪悄悄涌来\n汇成柔和的曲线\n梦孤零零的\n海很遥远]]></string>-->
+    <!--<string name="test_content"><![CDATA[-->
+    <!--![image1](https://images.unsplash.com/reserve/bOvf94dPRxWu0u3QsPjF_tree.jpg?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=dc3c11450eb2cc81086200006ac495a4&auto=format&fit=crop&w=3310&q=80)树林和我\n紧紧围住了小湖\n手伸进水里\n搅乱雨燕深沉的睡眠\n风孤零零的\n海很遥远\n\n我走到街上\n喧嚣被挡在红灯后面\n影子扇形般打开\n脚印歪歪斜斜\n安全岛孤零零的\n海很遥远\n\n![image2](https://images.unsplash.com/photo-1541176774394-c4f4825919df?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=33ee5b0b2519c52da5ec299c453cb21f&auto=format&fit=crop&w=975&q=80)一扇蓝色的窗户亮了\n楼下，几个男孩\n拨动着吉他吟唱\n烟头忽明忽暗\n野猫孤零零的\n海很遥远\n\n沙滩上，你睡着了\n风停在你的嘴边\n波浪悄悄涌来\n汇成柔和的曲线\n梦孤零零的\n海很遥远-->
+    <!--]]></string>-->
+
+    <string name="test_content"><![CDATA[
+# title 1
+##title2
+###title3
+####title4
+#####title5
+######title6
+
+**Hi**[Github](https://www.github.com)![image1](https://images.unsplash.com/reserve/bOvf94dPRxWu0u3QsPjF_tree.jpg?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=dc3c11450eb2cc81086200006ac495a4&auto=format&fit=crop&w=3310&q=80)树林和我\n紧紧围住了小湖\n手伸进水里\n搅乱[雨燕深沉](https://www.google.com)的睡眠\n风孤零零的\n海很遥远\n\n我走到街上\n喧嚣被挡在红灯后面\n影子扇形般打开\n*脚印**歪歪*斜斜*\n安全岛孤零零的\n海很遥远\n\n![image2](https://images.unsplash.com/photo-1541176774394-c4f4825919df?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=33ee5b0b2519c52da5ec299c453cb21f&auto=format&fit=crop&w=975&q=80)一扇_蓝色的窗户_亮了\n楼下，几个男孩\n拨动着吉他*吟唱*\n烟头__忽明忽暗__\n野猫孤零零的\n海很遥远\n\n沙滩上，你睡着了\n风停在**你的嘴**边\n波浪悄悄涌来\n汇成柔和的曲线\n梦孤零零的\n海很遥远(
+[Google](https://www.google.com))
+    ]]></string>
+</resources>
