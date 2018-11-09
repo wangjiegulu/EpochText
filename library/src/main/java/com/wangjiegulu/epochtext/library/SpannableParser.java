@@ -32,15 +32,18 @@ public class SpannableParser implements TextWatcher {
         spanResolvers.add(spanResolver);
         return this;
     }
+
     public SpannableParser addSpanResolvers(BaseSpanResolver<?>... spanResolver) {
         spanResolvers.addAll(Arrays.asList(spanResolver));
         return this;
     }
+
     public SpannableParser addSpanResolvers(List<BaseSpanResolver<?>> spanResolver) {
         spanResolvers.addAll(spanResolver);
         return this;
     }
-    public SpannableParser setEditMode(boolean isEditMode){
+
+    public SpannableParser setEditMode(boolean isEditMode) {
         for (BaseSpanResolver<?> spanResolver : spanResolvers) {
             spanResolver.setEditMode(isEditMode);
         }
@@ -56,14 +59,14 @@ public class SpannableParser implements TextWatcher {
 
     public void parse(Editable content) {
         TextView tv = textView.get();
-        if(null == tv){
+        if (null == tv) {
             return;
         }
 
         int selectionStart = tv.getSelectionStart();
         tv.setText(new SpannableString(content.toString()));
-        if(tv instanceof EditText){
-            ((EditText)tv).setSelection(selectionStart);
+        if (tv instanceof EditText) {
+            ((EditText) tv).setSelection(selectionStart);
         }
 
         long start = System.currentTimeMillis();
@@ -91,14 +94,13 @@ public class SpannableParser implements TextWatcher {
             T entry;
             try {
                 entry = spanResolver.resolveEntry(groupStr);
+                if (null == entry) {
+                    Log.e(TAG, "Resolved entry is null ! match group: " + groupStr);
+                }
+                spanResolver.assembly(textView, content, groupStr, entry, start, end);
             } catch (RuntimeException e) {
                 throw new EpochTextException("Resolve entry failed ! match group: " + groupStr, e);
             }
-
-            if (null == entry) {
-                throw new EpochTextException("Resolved entry is null ! match group: " + groupStr);
-            }
-            spanResolver.assembly(textView, content, groupStr, entry, start, end);
         }
     }
 
@@ -113,11 +115,12 @@ public class SpannableParser implements TextWatcher {
     }
 
     private String oldContent;
+
     @Override
     public void afterTextChanged(Editable s) {
         Log.i(TAG, "afterTextChanged editable: " + s.hashCode());
 
-        if(s.toString().equals(oldContent)){
+        if (s.toString().equals(oldContent)) {
             return;
         }
         oldContent = s.toString();
