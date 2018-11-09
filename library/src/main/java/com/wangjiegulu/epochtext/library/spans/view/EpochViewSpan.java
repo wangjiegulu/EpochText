@@ -27,8 +27,8 @@ public abstract class EpochViewSpan extends ReplacementSpan {
     private View view;
     private int lineHeight;
 
-    protected int viewMeasuredWidth;
-    protected int viewMeasuredHeight;
+    private int viewMeasuredWidth;
+    private int viewMeasuredHeight;
 
     private View.OnAttachStateChangeListener onAttachStateChangeListener;
 

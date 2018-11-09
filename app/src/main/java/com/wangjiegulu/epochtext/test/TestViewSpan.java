@@ -1,4 +1,4 @@
-package com.wangjiegulu.epochtext.library.spans.base;
+package com.wangjiegulu.epochtext.test;
 
 import android.content.Context;
 import android.graphics.Color;

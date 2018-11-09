@@ -1,4 +1,4 @@
-package com.wangjiegulu.epochtext.library.spans.base;
+package com.wangjiegulu.epochtext.test;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -16,7 +16,7 @@ import java.lang.ref.WeakReference;
  * Email: tiantian.china.2@gmail.com
  * Date: 2018/11/9.
  */
-public class EpochViewSpanResolver extends BaseSpanResolver<String> {
+public class EpochTestViewSpanResolver extends BaseSpanResolver<String> {
     @Override
     public String patternRegex() {
         return "\\{EPOCH_VIDEO\\}";
