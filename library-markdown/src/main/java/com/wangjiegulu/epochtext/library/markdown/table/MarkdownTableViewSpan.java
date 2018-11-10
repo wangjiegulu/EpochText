@@ -1,7 +1,6 @@
 package com.wangjiegulu.epochtext.library.markdown.table;
 
 import android.content.Context;
-import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.HorizontalScrollView;
@@ -63,21 +62,7 @@ public class MarkdownTableViewSpan extends EpochMatchViewSpan {
             tv.setText(th.name);
             tv.getPaint().setFakeBoldText(true);
             tv.setLayoutParams(new ViewGroup.LayoutParams((int) (matchWidth / 3.5), ViewGroup.LayoutParams.MATCH_PARENT));
-            int gravity;
-            switch (th.alignment) {
-                case MarkdownTableEntry.MarkdownTableTh.ALIGNMENT_LEFT:
-                    gravity = Gravity.START | Gravity.CENTER_VERTICAL;
-                    break;
-                case MarkdownTableEntry.MarkdownTableTh.ALIGNMENT_CENTER:
-                    gravity = Gravity.CENTER;
-                    break;
-                case MarkdownTableEntry.MarkdownTableTh.ALIGNMENT_RIGHT:
-                    gravity = Gravity.END | Gravity.CENTER_VERTICAL;
-                    break;
-                default:
-                    gravity = Gravity.START | Gravity.CENTER_VERTICAL;
-            }
-            tv.setGravity(gravity);
+            tv.setGravity(th.alignment);
             rowTh.addView(tv);
         }
 
@@ -97,21 +82,7 @@ public class MarkdownTableViewSpan extends EpochMatchViewSpan {
                 tv.setTextSize(16);
                 tv.setText(th.tds.get(i));
                 tv.setLayoutParams(new ViewGroup.LayoutParams((int) (matchWidth / 3.5), ViewGroup.LayoutParams.MATCH_PARENT));
-                int gravity;
-                switch (th.alignment) {
-                    case MarkdownTableEntry.MarkdownTableTh.ALIGNMENT_LEFT:
-                        gravity = Gravity.START | Gravity.CENTER_VERTICAL;
-                        break;
-                    case MarkdownTableEntry.MarkdownTableTh.ALIGNMENT_CENTER:
-                        gravity = Gravity.CENTER;
-                        break;
-                    case MarkdownTableEntry.MarkdownTableTh.ALIGNMENT_RIGHT:
-                        gravity = Gravity.END | Gravity.CENTER_VERTICAL;
-                        break;
-                    default:
-                        gravity = Gravity.START | Gravity.CENTER_VERTICAL;
-                }
-                tv.setGravity(gravity);
+                tv.setGravity(th.alignment);
                 rowTd.addView(tv);
             }
             linearLayout.addView(rowTd);

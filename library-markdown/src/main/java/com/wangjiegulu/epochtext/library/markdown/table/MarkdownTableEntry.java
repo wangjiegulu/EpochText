@@ -1,5 +1,7 @@
 package com.wangjiegulu.epochtext.library.markdown.table;
 
+import android.view.Gravity;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,9 +25,9 @@ public class MarkdownTableEntry {
     }
 
     static class MarkdownTableTh {
-        public static final int ALIGNMENT_LEFT = 0x12;
-        public static final int ALIGNMENT_CENTER = 0x13;
-        public static final int ALIGNMENT_RIGHT = 0x14;
+        public static final int ALIGNMENT_LEFT = Gravity.START | Gravity.CENTER_VERTICAL;
+        public static final int ALIGNMENT_CENTER = Gravity.CENTER;
+        public static final int ALIGNMENT_RIGHT = Gravity.END | Gravity.CENTER_VERTICAL;
 
         public String name;
         public int alignment;
