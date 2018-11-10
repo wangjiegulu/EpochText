@@ -20,6 +20,30 @@ public abstract class BaseSpanResolver<T> implements SpanResolver<T>{
         isEditMode = editMode;
     }
 
+    public void setEpochSpan(Spannable spannable, final Object span, final int start, final int end, final int flags){
+        spannable.setSpan(span, start, end, flags);
+        if(EpochViewSpan.class.isAssignableFrom(span.getClass())){
+
+            spannable.setSpan(new SpanWatcher() {
+                @Override
+                public void onSpanAdded(Spannable text, Object what, int start, int end) {
+
+                }
+
+                @Override
+                public void onSpanRemoved(Spannable text, Object what, int start, int end) {
+                    if(what == span){
+                        ((EpochViewSpan)span).onSpanRemoved();
+                    }
+                }
+
+                @Override
+                public void onSpanChanged(Spannable text, Object what, int ostart, int oend, int nstart, int nend) {
+
+                }
+            }, start, end, flags);
+        }
+    }
     /**
      * Add an View Span, and watch span remove event.
      * @param spannable

@@ -3,6 +3,8 @@ package com.wangjiegulu.epochtext.library.markdown.table;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.Spannable;
+import android.text.Spanned;
+import android.text.style.ScaleXSpan;
 import android.util.Log;
 import android.widget.TextView;
 
@@ -89,7 +91,13 @@ public class MarkdownTableSpanResolver extends BaseSpanResolver<MarkdownTableEnt
     @Override
     public void assembly(@NonNull WeakReference<TextView> textViewRef, @NonNull Spannable spannable, @NonNull String group, @NonNull MarkdownTableEntry entry, int groupStart, int groupEnd) {
         if (!isEditMode) {
-            // TODO: 2018/11/9 wangjie 
+            // TODO: 2018/11/9 wangjie
+            TextView tv = textViewRef.get();
+            if(null == tv){
+                return;
+            }
+            setEpochViewSpan(spannable, new MarkdownTableViewSpan(tv, tv.getLineHeight(), tv.getWidth(), entry), groupStart, groupStart + 1, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+            setEpochSpan(spannable, new ScaleXSpan(0), groupStart + 1, groupEnd, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
         }
     }
 }

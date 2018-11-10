@@ -2,7 +2,6 @@ package com.wangjiegulu.epochtext.library.spans.view;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.support.annotation.NonNull;
@@ -85,6 +84,7 @@ public abstract class EpochViewSpan extends ReplacementSpan {
         Log.i(TAG, "Measure viewWidth: " + view.getWidth() + ", viewHeight: " + view.getHeight());
     }
 
+    @Nullable
     protected abstract View createView();
 
     protected abstract void measureView(View view);
@@ -108,7 +108,7 @@ public abstract class EpochViewSpan extends ReplacementSpan {
         view.setY(transY);
 
         // 占位
-        paint.setColor(Color.BLUE);
+        paint.setColor(0xffaabbcc);
         canvas.drawRect(new Rect((int)x, transY, (int)x + view.getWidth(), transY + view.getHeight()), paint);
     }
 

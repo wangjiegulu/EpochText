@@ -18,7 +18,6 @@ import com.wangjiegulu.epochtext.library.markdown.list.ordered.MarkdownOrderedLi
 import com.wangjiegulu.epochtext.library.markdown.list.unordered.MarkdownUnorderedListSpanResolver;
 import com.wangjiegulu.epochtext.library.markdown.quote.MarkdownQuoteSpanResolver;
 import com.wangjiegulu.epochtext.library.markdown.strike.MarkdownStrikeSpanResolver;
-import com.wangjiegulu.epochtext.library.markdown.table.MarkdownTableSpanResolver;
 import com.wangjiegulu.epochtext.test.EpochTestViewSpanResolver;
 
 import java.io.BufferedReader;
@@ -63,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
 //                new MarkdownUnorderedSubListSpanResolver(),
                 new MarkdownOrderedListSpanResolver(),
                 new MarkdownHorizontalRuleSpanResolver(),
-                new MarkdownTableSpanResolver(),
+//                new MarkdownTableSpanResolver(),
 
                 new EpochTestViewSpanResolver()
         );
