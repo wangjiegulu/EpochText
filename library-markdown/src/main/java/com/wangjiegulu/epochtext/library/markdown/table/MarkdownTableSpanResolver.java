@@ -96,8 +96,9 @@ public class MarkdownTableSpanResolver extends BaseSpanResolver<MarkdownTableEnt
             if(null == tv){
                 return;
             }
-            setEpochViewSpan(spannable, new MarkdownTableViewSpan(tv, tv.getLineHeight(), tv.getWidth(), entry), groupStart, groupStart + 1, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
-            setEpochSpan(spannable, new ScaleXSpan(0), groupStart + 1, groupEnd, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
+            Log.i(TAG, "groupEnd: " + groupEnd);
+            setEpochSpan(spannable, new MarkdownTableViewSpan(tv, tv.getLineHeight(), tv.getWidth(), entry, groupEnd), groupStart, groupEnd, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+            setEpochSpan(spannable, new ScaleXSpan(0), groupStart, groupEnd, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
         }
     }
 }

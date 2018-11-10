@@ -64,7 +64,7 @@ public class SpannableParser implements TextWatcher {
         }
 
         int selectionStart = tv.getSelectionStart();
-        tv.setText(new SpannableString(content.toString()));
+        tv.setText(new SpannableString(content.toString()), TextView.BufferType.SPANNABLE);
         if (tv instanceof EditText) {
             ((EditText) tv).setSelection(selectionStart);
         }

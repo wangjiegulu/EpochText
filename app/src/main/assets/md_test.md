@@ -6,8 +6,6 @@
 
 **Hi**, [Github](https://www.github.com)
 
-{EPOCH_VIDEO}
-
 ![image1](https://images.unsplash.com/reserve/bOvf94dPRxWu0u3QsPjF_tree.jpg?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=dc3c11450eb2cc81086200006ac495a4&auto=format&fit=crop&w=3310&q=80)
 
 ### 树林和我
@@ -19,15 +17,17 @@
 风~孤零零~的
 海很遥远
 
+{EPOCH_VIDEO}
+
 - 遥远，海，很遥远
 - 孤零零，风，孤零零
 - 被搅乱，睡眠，被搅乱
 
-|事物|状态|
-|:---:|:---:|
-|海|遥远|
-|风|孤零零|
-|睡眠|被搅乱|
+|事物|状态|事物2|状态2|
+|:---:|:---:|:---:|:---:|
+|海|遥远|海2|遥远2|
+|风|孤零零|风2|孤零零2|
+|睡眠|被搅乱|睡眠2|被搅乱2|
 
 #### 我走到街上
 

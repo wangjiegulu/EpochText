@@ -17,10 +17,17 @@ import com.wangjiegulu.epochtext.library.util.SizeUtil;
  */
 public class MarkdownTableViewSpan extends EpochMatchViewSpan {
     private MarkdownTableEntry entry;
+    private int lastLineEndIndex;
 
-    public MarkdownTableViewSpan(TextView parentTv, int lineHeight, int matchWidth, MarkdownTableEntry entry) {
+    public MarkdownTableViewSpan(TextView parentTv, int lineHeight, int matchWidth, MarkdownTableEntry entry, int lastLineEndIndex) {
         super(parentTv, lineHeight, matchWidth);
         this.entry = entry;
+        this.lastLineEndIndex = lastLineEndIndex;
+    }
+
+    @Override
+    protected boolean shouldDraw(int start, int end) {
+        return end == lastLineEndIndex;
     }
 
     @Override
@@ -29,8 +36,10 @@ public class MarkdownTableViewSpan extends EpochMatchViewSpan {
         if(null == context){
             return null;
         }
+
+
         HorizontalScrollView scrollView = new HorizontalScrollView(context);
-        scrollView.setLayoutParams(new ViewGroup.LayoutParams(matchWidth, (int) SizeUtil.dp2px(context, 100)));
+        scrollView.setLayoutParams(new ViewGroup.LayoutParams(matchWidth, (int) SizeUtil.dp2px(context, 200)));
 
         LinearLayout linearLayout = new LinearLayout(context);
         linearLayout.setOrientation(LinearLayout.HORIZONTAL);
@@ -40,6 +49,7 @@ public class MarkdownTableViewSpan extends EpochMatchViewSpan {
                 TextView tv = new TextView(context);
                 tv.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
                 tv.setText(td);
+                tv.setTextSize(20);
                 linearLayout.addView(tv);
             }
         }
@@ -57,7 +67,7 @@ public class MarkdownTableViewSpan extends EpochMatchViewSpan {
         }
         measureView(
                 View.MeasureSpec.makeMeasureSpec(matchWidth, View.MeasureSpec.EXACTLY),
-                View.MeasureSpec.makeMeasureSpec((int) SizeUtil.dp2px(context, 100), View.MeasureSpec.EXACTLY)
+                View.MeasureSpec.makeMeasureSpec((int) SizeUtil.dp2px(context, 200), View.MeasureSpec.EXACTLY)
         );
     }
 }

@@ -52,6 +52,9 @@ public abstract class EpochViewSpan extends ReplacementSpan {
     @Override
     public int getSize(@NonNull Paint paint, CharSequence text, int start, int end, @Nullable Paint.FontMetricsInt fm) {
         Log.i(TAG, "getSize...");
+        if(!shouldDraw(start, end)){
+            return 0;
+        }
         if(null == view){
             view = createView();
             if(null != view){
@@ -84,32 +87,64 @@ public abstract class EpochViewSpan extends ReplacementSpan {
         Log.i(TAG, "Measure viewWidth: " + view.getWidth() + ", viewHeight: " + view.getHeight());
     }
 
+    /**
+     * Create custom view.
+     *
+     * @return
+     */
     @Nullable
     protected abstract View createView();
 
+    /**
+     * Measure view
+     *
+     * @param view
+     */
     protected abstract void measureView(View view);
 
+    /**
+     * Should draw the line start from `start` and end to `end`.
+     *
+     * @param start
+     * @param end
+     * @return
+     */
+    protected boolean shouldDraw(int start, int end){
+        return true;
+    }
+
+    /**
+     * If parent (EditText / TextView) detached from window, then it will be call.
+     */
     protected void onParentTvDetachedFromWindow(){
 
     }
 
     @Override
-    public void draw(@NonNull Canvas canvas, CharSequence text, int start, int end, float x, int top, int y, int bottom, @NonNull Paint paint) {
-        if(null == view){
+    public void draw(@NonNull Canvas canvas, CharSequence text, int start, int end, final float x, int top, int y, int bottom, @NonNull Paint paint) {
+        if(null == view || !shouldDraw(start, end)){
             return;
         }
-        Log.i(TAG, "Draw viewMeasuredWidth: " + viewMeasuredWidth + ", viewMeasuredHeight: " + viewMeasuredHeight);
-        Log.i(TAG, "Draw viewWidth: " + view.getWidth() + ", viewHeight: " + view.getHeight());
+        int transX = (int)x;
+        Log.i(this.getClass().getSimpleName(), "start: " + start + ", end: " + end + ", x: " + x + ", y: " + y + ", top: " + top + ", bottom: " + bottom);
+
+//        Log.i(TAG, "Draw viewMeasuredWidth: " + viewMeasuredWidth + ", viewMeasuredHeight: " + viewMeasuredHeight);
+//        Log.i(TAG, "Draw viewWidth: " + view.getWidth() + ", viewHeight: " + view.getHeight());
+
         Paint.FontMetricsInt fm = paint.getFontMetricsInt();
         int lineSpace = lineHeight - Math.abs(fm.ascent) - Math.abs(fm.descent) - Math.abs(fm.leading);
         int transY = bottom - view.getHeight() - lineSpace;
 
-        view.setX((int)x);
+        Log.i(this.getClass().getSimpleName(), "Draw transX: " + transX + ", transY: " + transY);
+
+        view.setX(transX);
         view.setY(transY);
 
         // 占位
         paint.setColor(0xffaabbcc);
-        canvas.drawRect(new Rect((int)x, transY, (int)x + view.getWidth(), transY + view.getHeight()), paint);
+        canvas.drawRect(new Rect(transX, transY, transX + view.getWidth(), transY + view.getHeight()), paint);
+
+        Log.i(this.getClass().getSimpleName(), "parentTv.getHeight(): " + parentTv.getHeight());
     }
 
     @Nullable

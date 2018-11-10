@@ -46,8 +46,6 @@ public class TestViewSpan extends EpochViewSpan {
 
 
 
-
-
         return view;
     }
 

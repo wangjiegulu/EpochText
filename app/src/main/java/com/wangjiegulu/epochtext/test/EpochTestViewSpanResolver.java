@@ -36,7 +36,7 @@ public class EpochTestViewSpanResolver extends BaseSpanResolver<String> {
                 return;
             }
             final EpochViewSpan viewSpan = new TestViewSpan(textViewRef.get(), tv.getLineHeight(), tv.getWidth());
-            setEpochViewSpan(spannable,
+            setEpochSpan(spannable,
                     viewSpan,
                     groupStart, groupEnd, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
 

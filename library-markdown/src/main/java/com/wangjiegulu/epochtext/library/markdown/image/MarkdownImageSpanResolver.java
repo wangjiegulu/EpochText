@@ -16,7 +16,6 @@ import com.bumptech.glide.request.transition.Transition;
 import com.wangjiegulu.epochtext.library.BaseSpanResolver;
 import com.wangjiegulu.epochtext.library.spans.image.BottomAlignImageSpan;
 import com.wangjiegulu.epochtext.library.spans.longclick.FullClickableSpan;
-import com.wangjiegulu.epochtext.library.util.SizeUtil;
 
 import java.lang.ref.WeakReference;
 
@@ -45,37 +44,42 @@ public class MarkdownImageSpanResolver extends BaseSpanResolver<MarkdownImageEnt
 
     @Override
     public void assembly(@NonNull final WeakReference<TextView> textViewRef, @NonNull final Spannable spannable, @NonNull String group, @NonNull final MarkdownImageEntry entry, final int groupStart, final int groupEnd) {
-        if(null == textViewRef.get()){
+        TextView tv = textViewRef.get();
+        if(null == tv){
             return;
         }
 
         // TODO: 2018/11/8 wangjie
         Drawable placeHolder = new ColorDrawable(0xffe4e4e4);
-        int width = (int) SizeUtil.dp2px(textViewRef.get().getContext(), 300);
+//        int width = (int) SizeUtil.dp2px(textViewRef.get().getContext(), 300);
+        int width = tv.getWidth();
         int height = width / 2;
         placeHolder.setBounds(0, 0, width, height);
-        final BottomAlignImageSpan placeHolderSpan = new BottomAlignImageSpan(placeHolder, textViewRef.get().getLineHeight());
+        final BottomAlignImageSpan placeHolderSpan = new BottomAlignImageSpan(placeHolder, tv.getLineHeight());
         spannable.setSpan(placeHolderSpan, groupStart, groupEnd, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
 
-        Glide.with(textViewRef.get().getContext())
+        Glide.with(tv.getContext())
                 .asDrawable()
                 .load(entry.getUrl())
                 .into(new SimpleTarget<Drawable>() {
                     @Override
                     public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
-                        if(null == textViewRef.get()){
+                        final TextView tv = textViewRef.get();
+                        if(null == tv){
                             return;
                         }
 
-                        int width = textViewRef.get().getWidth();
-                        int height = width * resource.getIntrinsicHeight() / resource.getIntrinsicWidth();
-
-                        resource.setBounds(0, 0, width, height);
                         // 删除placeHolder
                         spannable.removeSpan(placeHolderSpan);
 
+                        int width = tv.getWidth();
+                        int height = width * resource.getIntrinsicHeight() / resource.getIntrinsicWidth();
+//                        int height = width / 2;
+                        resource.setBounds(0, 0, width, height);
 //                        resource.setBounds(0, 0, 280, 280);
-                        spannable.setSpan(new BottomAlignImageSpan(resource, textViewRef.get().getLineHeight()), groupStart, groupEnd, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
+                        spannable.setSpan(new BottomAlignImageSpan(resource, tv.getLineHeight()), groupStart, groupEnd, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
+                        // Refresh content due to image span changed.
+                        tv.setText(spannable);
                     }
                 });
 
