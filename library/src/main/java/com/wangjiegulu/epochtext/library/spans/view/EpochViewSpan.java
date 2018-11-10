@@ -2,6 +2,7 @@ package com.wangjiegulu.epochtext.library.spans.view;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.support.annotation.NonNull;
@@ -141,7 +142,7 @@ public abstract class EpochViewSpan extends ReplacementSpan {
         view.setY(transY);
 
         // 占位
-        paint.setColor(0xffaabbcc);
+        paint.setColor(Color.TRANSPARENT);
         canvas.drawRect(new Rect(transX, transY, transX + view.getWidth(), transY + view.getHeight()), paint);
 
         Log.i(this.getClass().getSimpleName(), "parentTv.getHeight(): " + parentTv.getHeight());
