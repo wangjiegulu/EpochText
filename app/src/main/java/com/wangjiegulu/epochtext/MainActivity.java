@@ -3,6 +3,7 @@ package com.wangjiegulu.epochtext;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 import android.widget.EditText;
 
 import com.wangjiegulu.epochtext.library.BaseSpanResolver;
@@ -30,22 +31,14 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = MainActivity.class.getSimpleName();
 
+    private SpannableParser spannableParser;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
         final EditText contentEt = findViewById(R.id.activity_main_content_et);
-        final String s = getFromAssets("md_test.md");
-        Log.i(TAG, "raw content: " + s);
-
-//        boolean isEditMode = true;
-        boolean isEditMode = false;
-
-        contentEt.setCursorVisible(isEditMode);
-        contentEt.setFocusable(isEditMode);
-        contentEt.setFocusableInTouchMode(isEditMode);
 
         /*
          * all supported markdown resolvers
@@ -68,19 +61,24 @@ public class MainActivity extends AppCompatActivity {
                 new EpochTestViewSpanResolver()
         );
 
-        SpannableParser spannableParser = new SpannableParser(contentEt);
+        spannableParser = new SpannableParser(contentEt);
         spannableParser
                 .addSpanResolvers(markdownResolvers)
-                .setEditMode(isEditMode);
+                .setEditMode(true);
 
         contentEt.post(new Runnable() {
             @Override
             public void run() {
+                final String s = getFromAssets("md_test.md");
+                Log.i(TAG, "raw content: " + s);
                 contentEt.setText(s);
             }
         });
 
+    }
 
+    public void onToggleClick(View view){
+        spannableParser.toggleMode();
     }
 
     private String getFromAssets(String fileName){
@@ -98,5 +96,4 @@ public class MainActivity extends AppCompatActivity {
         }
         return "";
     }
-
 }

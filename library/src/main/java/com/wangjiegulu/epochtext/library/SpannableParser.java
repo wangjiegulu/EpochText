@@ -5,7 +5,9 @@ import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.ViewParent;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.wangjiegulu.epochtext.library.exception.EpochTextException;
@@ -27,6 +29,7 @@ public class SpannableParser implements TextWatcher {
     private static final String TAG = SpannableParser.class.getSimpleName();
     private WeakReference<TextView> textView;
     private List<BaseSpanResolver<?>> spanResolvers = new ArrayList<>();
+    private boolean isEditMode;
 
     public <T> SpannableParser addSpanResolver(BaseSpanResolver<T> spanResolver) {
         spanResolvers.add(spanResolver);
@@ -44,10 +47,42 @@ public class SpannableParser implements TextWatcher {
     }
 
     public SpannableParser setEditMode(boolean isEditMode) {
+        if(this.isEditMode == isEditMode){
+            return this;
+        }
         for (BaseSpanResolver<?> spanResolver : spanResolvers) {
             spanResolver.setEditMode(isEditMode);
         }
+        this.isEditMode = isEditMode;
+
+        TextView tv = textView.get();
+        if(null != tv){
+            tv.setCursorVisible(isEditMode);
+            tv.setFocusable(isEditMode);
+            tv.setFocusableInTouchMode(isEditMode);
+
+            if(isEditMode){
+                // remove all views of view spans
+                ViewParent viewParent = tv.getParent();
+                if(null != viewParent && viewParent instanceof FrameLayout){
+                    FrameLayout frame = ((FrameLayout) viewParent);
+                    int childCount = frame.getChildCount();
+                    if(childCount > 1){
+                        frame.removeViews(1, childCount - 1);
+                    }
+                }
+            }
+        }
+
         return this;
+    }
+
+    public boolean isEditMode() {
+        return isEditMode;
+    }
+    public void toggleMode(){
+        setEditMode(!isEditMode);
+        parse();
     }
 
     public SpannableParser(TextView textView) {
@@ -57,11 +92,13 @@ public class SpannableParser implements TextWatcher {
         this.textView.get().setMovementMethod(LinkMovementMethodExt.instance());
     }
 
-    public void parse(Editable content) {
+    public void parse() {
         TextView tv = textView.get();
         if (null == tv) {
             return;
         }
+
+        Editable content = textView.get().getEditableText();
 
         int selectionStart = tv.getSelectionStart();
         tv.setText(new SpannableString(content.toString()), TextView.BufferType.SPANNABLE);
@@ -121,10 +158,11 @@ public class SpannableParser implements TextWatcher {
         Log.i(TAG, "afterTextChanged editable: " + s.hashCode());
 
         if (s.toString().equals(oldContent)) {
+            Log.i(TAG, "afterTextChanged editable ignored: " + s.hashCode());
             return;
         }
         oldContent = s.toString();
-//        s.clearSpans();
-        parse(s);
+        Log.i(TAG, "afterTextChanged editable parse: " + s.hashCode());
+        parse();
     }
 }

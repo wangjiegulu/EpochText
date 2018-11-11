@@ -48,6 +48,9 @@ public class MarkdownImageSpanResolver extends BaseSpanResolver<MarkdownImageEnt
         if(null == tv){
             return;
         }
+        if(isEditMode){
+            return;
+        }
 
         // TODO: 2018/11/8 wangjie
         Drawable placeHolder = new ColorDrawable(0xffe4e4e4);
@@ -80,6 +83,8 @@ public class MarkdownImageSpanResolver extends BaseSpanResolver<MarkdownImageEnt
                         spannable.setSpan(new BottomAlignImageSpan(resource, tv.getLineHeight()), groupStart, groupEnd, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
                         // Refresh content due to image span changed.
                         tv.setText(spannable);
+//                        tv.invalidate();
+//                        tv.requestLayout();
                     }
                 });
 

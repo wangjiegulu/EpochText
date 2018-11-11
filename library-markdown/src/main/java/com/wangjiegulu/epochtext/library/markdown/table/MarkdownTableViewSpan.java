@@ -71,9 +71,7 @@ public class MarkdownTableViewSpan extends EpochMatchViewSpan {
         int rowCount = entry.ths.get(0).tds.size();
         for (int i = 0; i < rowCount; i++){
             LinearLayout rowTd = new LinearLayout(context);
-            if(i % 2 != 0){
-                rowTd.setBackgroundColor(0xffe1e1e1);
-            }
+            rowTd.setBackgroundColor(i % 2 != 0 ? 0xffe1e1e1 : 0xffffffff);
             for(MarkdownTableEntry.MarkdownTableTh th : entry.ths){
                 TextView tv = new TextView(context);
                 tv.setBackgroundResource(R.drawable.shape_markdown_table_border);
