@@ -2,7 +2,6 @@ package com.wangjiegulu.epochtext.library;
 
 import android.text.Editable;
 import android.text.Spannable;
-import android.text.SpannableString;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.ViewParent;
@@ -99,9 +98,10 @@ public class SpannableParser implements TextWatcher {
         }
 
         Editable content = textView.get().getEditableText();
+        content.clearSpans();
 
         int selectionStart = tv.getSelectionStart();
-        tv.setText(new SpannableString(content.toString()), TextView.BufferType.SPANNABLE);
+//        tv.setText(new SpannableString(content.toString()), TextView.BufferType.SPANNABLE);
         if (tv instanceof EditText) {
             ((EditText) tv).setSelection(selectionStart);
         }

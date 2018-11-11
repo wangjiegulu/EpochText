@@ -43,7 +43,7 @@ public class MarkdownImageSpanResolver extends BaseSpanResolver<MarkdownImageEnt
     }
 
     @Override
-    public void assembly(@NonNull final WeakReference<TextView> textViewRef, @NonNull final Spannable spannable, @NonNull String group, @NonNull final MarkdownImageEntry entry, final int groupStart, final int groupEnd) {
+    public void assembly(@NonNull final WeakReference<TextView> textViewRef, @NonNull Spannable spannable, @NonNull String group, @NonNull final MarkdownImageEntry entry, final int groupStart, final int groupEnd) {
         TextView tv = textViewRef.get();
         if(null == tv){
             return;
@@ -73,18 +73,17 @@ public class MarkdownImageSpanResolver extends BaseSpanResolver<MarkdownImageEnt
                         }
 
                         // 删除placeHolder
-                        spannable.removeSpan(placeHolderSpan);
+                        Spannable newSpannable = tv.getEditableText();
+                        newSpannable.removeSpan(placeHolderSpan);
 
                         int width = tv.getWidth();
                         int height = width * resource.getIntrinsicHeight() / resource.getIntrinsicWidth();
 //                        int height = width / 2;
                         resource.setBounds(0, 0, width, height);
 //                        resource.setBounds(0, 0, 280, 280);
-                        spannable.setSpan(new BottomAlignImageSpan(resource, tv.getLineHeight()), groupStart, groupEnd, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
+                        newSpannable.setSpan(new BottomAlignImageSpan(resource, tv.getLineHeight()), groupStart, groupEnd, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
                         // Refresh content due to image span changed.
-                        tv.setText(spannable);
-//                        tv.invalidate();
-//                        tv.requestLayout();
+                        tv.setText(newSpannable, TextView.BufferType.SPANNABLE);
                     }
                 });
 
